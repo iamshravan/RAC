@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import it from '@angular/common/locales/it';
+import { beforeEach, describe } from 'node:test';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -27,3 +29,7 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('Hello, rentacab');
   });
 });
+function expect(title: string) {
+  throw new Error('Function not implemented.');
+}
+

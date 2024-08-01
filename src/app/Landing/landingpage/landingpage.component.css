@@ -1,0 +1,33 @@
+.landing-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .icon-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .icon {
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .icon img {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+  }
+  
+  .icon p {
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  

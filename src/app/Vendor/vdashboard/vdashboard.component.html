@@ -1,0 +1,62 @@
+<div class="vendor-container">
+  <h2>Employee List</h2>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Search by ID or Name"
+      [(ngModel)]="searchQuery"
+      (input)="filterEmployees()"
+    />
+  </div>
+
+  <!-- Employee Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of filteredEmployees">
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.position }}</td>
+        <td>
+          <button (click)="openBookingForm(employee)">Schedule</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Booking Form Modal -->
+  <div class="modal" *ngIf="selectedEmployee">
+    <div class="modal-content">
+      <span class="close" (click)="closeBookingForm()">&times;</span>
+      <h2>Book a Cab for {{ selectedEmployee.name }}</h2>
+      <form (ngSubmit)="onBookCab()" #bookingForm="ngForm">
+        <div>
+          <label for="pickupLocation">Pickup Location:</label>
+          <input type="text" id="pickupLocation" name="pickupLocation" [(ngModel)]="booking.pickupLocation" placeholder="Enter pickup location" required>
+        </div>
+        <div>
+          <label for="dropLocation">Drop Location:</label>
+          <input type="text" id="dropLocation" name="dropLocation" [(ngModel)]="booking.dropLocation" placeholder="Enter drop location" required>
+        </div>
+        <div>
+          <label for="date">Date:</label>
+          <input type="date" id="date" [(ngModel)]="booking.date" name="date" required>
+        </div>
+        <div>
+          <label for="time">Time:</label>
+          <input type="time" id="time" [(ngModel)]="booking.time" name="time" required>
+        </div>
+        <button type="submit" [disabled]="!bookingForm.form.valid">Book Cab</button>
+      </form>
+    </div>
+  </div>
+</div>

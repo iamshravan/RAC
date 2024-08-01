@@ -1,0 +1,167 @@
+<div class="dashboard-container">
+  <h2>Schedule Trip</h2>
+  <form (ngSubmit)="onSchedule()" #scheduleForm="ngForm">
+    <!-- Initial Trip Type Selection -->
+    <div class="radio-group">
+      <div class="radio-option">
+        <input type="radio" id="airport" name="initialType" [(ngModel)]="schedule.initialType" value="Airport" required>
+        <label for="airport">Airport</label>
+      </div>
+      <div class="radio-option">
+        <input type="radio" id="disposal" name="initialType" [(ngModel)]="schedule.initialType" value="Disposal" required>
+        <label for="disposal">Disposal</label>
+      </div>
+    </div>
+
+    <!-- Additional Options Based on Initial Selection -->
+    <div *ngIf="schedule.initialType === 'Airport'">
+      <div class="radio-group">
+        <div class="radio-option">
+          <input type="radio" id="pickup" name="tripType" [(ngModel)]="schedule.tripType" value="Pickup" required>
+          <label for="pickup">Pickup</label>
+        </div>
+        <div class="radio-option">
+          <input type="radio" id="drop" name="tripType" [(ngModel)]="schedule.tripType" value="Drop" required>
+          <label for="drop">Drop</label>
+        </div>
+      </div>
+      <div>
+        <label for="location">{{ schedule.tripType === 'Pickup' ? 'Drop Location' : 'Pickup Location' }}:</label>
+        <input type="text" id="location" [(ngModel)]="schedule.location" name="location" required>
+      </div>
+      <div *ngIf="schedule.tripType === 'Pickup'">
+        <div>
+          <label for="arrival-time">Flight Arrival Time:</label>
+          <input type="time" id="arrival-time" [(ngModel)]="schedule.arrivalTime" name="arrivalTime" required>
+        </div>
+        <div>
+          <label for="carrier-name">Carrier Name:</label>
+          <input type="text" id="carrier-name" [(ngModel)]="schedule.carrierName" name="carrierName" required>
+        </div>
+      </div>
+      <div *ngIf="schedule.tripType === 'Drop'">
+        <div>
+          <label for="departure-time">Flight Departure Time:</label>
+          <input type="time" id="departure-time" [(ngModel)]="schedule.departureTime" name="departureTime" required>
+        </div>
+      </div>
+      <div>
+        <label for="airport-date">Date:</label>
+        <input type="date" id="airport-date" [(ngModel)]="schedule.date" name="date" required>
+      </div>
+      <div>
+        <label for="airport-time">Time:</label>
+        <input type="time" id="airport-time" [(ngModel)]="schedule.time" name="time" required>
+      </div>
+    </div>
+
+    <div *ngIf="schedule.initialType === 'Disposal'">
+      <div class="input-group">
+        <div>
+          <label for="from">From:</label>
+          <input type="text" id="from" #fromInput>
+        </div>
+        <div>
+          <label for="to">To:</label>
+        <input type="text" id="to" #toInput>
+        </div>
+      </div>
+      <div>
+        <label for="disposal-date">Date:</label>
+        <input type="date" id="disposal-date" [(ngModel)]="schedule.date" name="date" required>
+      </div>
+      <div>
+        <label for="disposal-time">Time:</label>
+        <input type="time" id="disposal-time" [(ngModel)]="schedule.time" name="time" required>
+      </div>
+      <!-- Buttons only for Disposal -->
+      <div class="button-container">
+        <button type="button" (click)="openPackageModal()" class="package-selection-button">Select Package</button>
+        <button type="button" (click)="openVehicleModal()" class="vehicle-selection-button">Select Vehicle Type</button>
+      </div>
+    </div>
+
+    <!-- Bill Type Button (Visible for both Airport and Disposal) -->
+    <div class="button-container">
+      <button type="button" class="bill-type-button" (click)="toggleBillTypeModal()">Bill Type</button>
+    </div>
+
+    <!-- Display Cost Center Input if Bill to Company is Selected -->
+    <div *ngIf="selectedBillType === 'Bill to Company'">
+      <div>
+        <label for="cost-center">Cost Center:</label>
+        <input type="text" id="cost-center" [(ngModel)]="schedule.costCenter" name="costCenter">
+      </div>
+    </div>
+
+    <!-- Vehicle and Package Display -->
+    <div class="selection-info">
+      <div class="vehicle-info" *ngIf="schedule.vehicleType">
+        <p>Selected Vehicle: {{ schedule.vehicleType }}</p>
+        <img *ngIf="schedule.vehicleImage" [src]="schedule.vehicleImage" alt="{{ schedule.vehicleType }}" class="vehicle-image">
+      </div>
+      <div class="package-info" *ngIf="schedule.package">
+        <p>Selected Package: {{ schedule.package }}</p>
+      </div>
+    </div>
+
+    <div class="schedule-button-container">
+      <button type="submit" [disabled]="!scheduleForm.form.valid">Schedule Trip</button>
+    </div>
+  </form>
+
+  <!-- Vehicle Selection Modal -->
+  <div class="modal" *ngIf="isVehicleModalOpen">
+    <div class="modal-content">
+      <h3>Select Vehicle Type</h3>
+      <div class="vehicle-options">
+        <div class="vehicle-option" (click)="selectVehicle('Sedan', 'assets/images/sedan.jpg')">
+          <img src="assets/images/sedan.jpg" alt="Sedan">
+          <p>Sedan</p>
+        </div>
+        <div class="vehicle-option" (click)="selectVehicle('SUV', 'assets/images/suv.jpg')">
+          <img src="assets/images/suv.jpg" alt="SUV">
+          <p>SUV</p>
+        </div>
+        <div class="vehicle-option" (click)="selectVehicle('Micro', 'assets/images/micro.jpg')">
+          <img src="assets/images/micro.jpg" alt="Micro">
+          <p>Micro</p>
+        </div>
+      </div>
+      <button (click)="closeVehicleModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Package Selection Modal -->
+  <div class="modal" *ngIf="isPackageModalOpen">
+    <div class="modal-content">
+      <h3>Select Package</h3>
+      <div class="package-options">
+        <div class="package-option" (click)="selectPackage('4h 40km')">
+          <p>4h 40km</p>
+        </div>
+        <div class="package-option" (click)="selectPackage('6h 60km')">
+          <p>6h 60km</p>
+        </div>
+        <!-- Add more package options if needed -->
+      </div>
+      <button (click)="closePackageModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Bill Type Modal -->
+  <div class="modal" *ngIf="isBillTypeModalOpen">
+    <div class="modal-content">
+      <h3>Select Bill Type</h3>
+      <div class="bill-options">
+        <div class="bill-option" (click)="selectBillType('Bill to Company')">
+          <p>Bill to Company</p>
+        </div>
+        <div class="bill-option" (click)="selectBillType('Direct Payment')">
+          <p>Direct Payment</p>
+        </div>
+      </div>
+      <button (click)="closeBillTypeModal()">Close</button>
+    </div>
+  </div>
+</div>
