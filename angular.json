@@ -16,9 +16,11 @@
             "outputPath": "dist/rentacab",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            
             "polyfills": [
               "zone.js"
             ],
+            
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -97,5 +99,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "ceb7c8b5-ae4b-4cdb-b92f-a2e0b3aecedb"
   }
 }

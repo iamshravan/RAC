@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxGpAutocompleteModule } from '@angular-magic/ngx-gp-autocomplete';
+//import { NgxGpAutocompleteModule } from '../../../ngx-gp-autocomplete.module';
+//import { NgxGpAutocompleteDirective } from '@angular-magic/ngx-gp-autocomplete';
+import { Address } from 'ngx-google-places-autocomplete/objects/address';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,6 +18,12 @@ export class DashboardComponent {
   isPackageModalOpen = false;
   isBillTypeModalOpen = false;
   isCostCenterModalOpen = false;
+  title ='rou';
+  formattedaddress="";
+  options: any = {
+    componentRestrctions:
+    { country: 'IN' }    
+  }
 
   schedule = {
     initialType: '',
@@ -36,10 +45,8 @@ export class DashboardComponent {
   costCenterCode = '';
   selectedBillType = '';
 
-  handlePlaceChange(inputId: string, place: any) {
-    if (place && place.formatted_address) {
-      this.schedule[inputId as keyof typeof this.schedule] = place.formatted_address;
-    }
+  public AddressChange(place: any) {
+    this.formattedaddress = place.formatted_address;
   }
 
   toggleBillTypeModal() {
