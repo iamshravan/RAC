@@ -5,13 +5,26 @@ import { NgxGpAutocompleteModule } from '@angular-magic/ngx-gp-autocomplete';
 //import { NgxGpAutocompleteModule } from '../../../ngx-gp-autocomplete.module';
 //import { NgxGpAutocompleteDirective } from '@angular-magic/ngx-gp-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
+import { Loader } from '@googlemaps/js-api-loader';
+import { type } from 'node:os';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule, NgxGpAutocompleteModule]
+  imports: [FormsModule, CommonModule, NgxGpAutocompleteModule],
+  providers:[
+    {
+        provide: Loader,
+        useValue: new Loader({
+          apiKey: 'AIzaSyD1DzSVz_ZddwghFjteC3P1NUvZrK6xqis',
+          libraries: ['places']
+        })
+      },
+  
+    ]
+  
 })
 export class DashboardComponent {
   isVehicleModalOpen = false;
@@ -19,7 +32,14 @@ export class DashboardComponent {
   isBillTypeModalOpen = false;
   isCostCenterModalOpen = false;
   title ='rou';
-  formattedaddress="";
+  public formattedaddressFrom: string | undefined;
+  public formattedaddressTo: string | undefined;
+  public formattedaddressDrop: string | undefined;
+  public formattedaddressPickup: string | undefined;
+  public fromLatitude: number | undefined;
+  public fromLongitude: number | undefined;
+  public toLatitude: number | undefined;
+  public toLongitude: number | undefined;
   options: any = {
     componentRestrctions:
     { country: 'IN' }    
@@ -45,8 +65,22 @@ export class DashboardComponent {
   costCenterCode = '';
   selectedBillType = '';
 
-  public AddressChange(place: any) {
-    this.formattedaddress = place.formatted_address;
+  public AddressChange(place: any, type: string) {
+    if (type === 'from') {
+      this.formattedaddressFrom = place.formatted_address;
+      this.fromLatitude = place.geometry.location.lat();
+      this.fromLongitude = place.geometry.location.lng();
+    } else if (type === 'to') {
+      this.formattedaddressTo = place.formatted_address;
+      this.toLatitude = place.geometry.location.lat();
+      this.toLongitude = place.geometry.location.lng();
+    }
+    else if (type === 'pickupLocation') {
+      this.schedule.location = place.formatted_address;
+    }
+    else if (type === 'dropLocation') {
+      this.schedule.location = place.formatted_address;
+    }
   }
 
   toggleBillTypeModal() {

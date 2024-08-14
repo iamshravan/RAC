@@ -25,10 +25,21 @@
           <label for="drop">Drop</label>
         </div>
       </div>
-      <div>
+      <!-- <div>
         <label for="location">{{ schedule.tripType === 'Pickup' ? 'Drop Location' : 'Pickup Location' }}:</label>
         <input type="text" id="location" [(ngModel)]="schedule.location" name="location" required>
+      </div> -->
+      <div>
+        <label for="from">{{ schedule.tripType === 'Pickup' ? 'Drop Location' : 'Pickup Location' }}:</label>
+        <input 
+          #placesRefFrom="ngx-places" 
+          ngx-gp-autocomplete 
+          [options]="options" 
+          (onAddressChange)="AddressChange($event, schedule.tripType === 'Pickup' ? 'dropLocation' : 'pickupLocation')" 
+        />
+        {{ schedule.tripType === 'Pickup' ? formattedaddressDrop : formattedaddressPickup }}
       </div>
+      
       <div *ngIf="schedule.tripType === 'Pickup'">
         <div>
           <label for="arrival-time">Flight Arrival Time:</label>
@@ -59,15 +70,22 @@
       <div class="input-group">
         <div>
           <label for="from">From:</label>
-      <input ngx-google-places-autocomplete [options]="options" (onAddressChange)="AddressChange($event)" />
-      {{formattedaddress}}
+          <input type="text" #placesRefFrom="ngx-places" ngx-gp-autocomplete [options]="options" (onAddressChange)="AddressChange($event, 'from')" />
+          {{formattedaddressFrom}}
+          <label for="from-lat">From Latitude:</label>
+          <input type="text" id="from-lat" name="fromLat" [value]="fromLatitude" />
+          <input type="hidden" id="from-lng" name="fromLng" [value]="fromLongitude" />
         </div>
-        <!-- <input type="text" id="from" #fromInput>
-        </div> -->
         <div>
           <label for="to">To:</label>
-        <input type="text" id="to" #toInput>
+          <input type="text" #placesRefTo="ngx-places" ngx-gp-autocomplete [options]="options" (onAddressChange)="AddressChange($event, 'to')" />
+          {{formattedaddressTo}}
+          <label for="to-lat">To Latitude:</label>
+          <input type="text" id="to-lat" [value]="toLatitude" readonly />
+          <label for="to-lng">To Longitude:</label>
+          <input type="text" id="to-lng" [value]="toLongitude" readonly />
         </div>
+        
       </div>
       <div>
         <label for="disposal-date">Date:</label>
