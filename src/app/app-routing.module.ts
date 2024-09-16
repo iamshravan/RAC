@@ -6,12 +6,17 @@ import { ForgotPasswordComponent } from './Auth/forgot-password/forgot-password.
 import { DashboardComponent } from './Employee/dashboard/dashboard.component';
 //import { VdashboardComponent } from './Vendor/vdashboard/vdashboard.component';
 import { VendorComponent } from './Vendor/vdashboard/vdashboard.component';
+import { TripDashboardComponent } from './trip-dashboard/trip-dashboard.component';
+import { NewSignupComponent } from './new-signup/new-signup.component';
+
 const routes: Routes = [
   { path: '', component: LandingpageComponent },
+  { path: 'signup', component: NewSignupComponent },
   { path: 'login', component: AuthpageComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'vdashboard', component: VendorComponent},
+  { path: 'trip-dashboard', component: TripDashboardComponent },
   { path: '**', redirectTo: '' } // Redirect unknown paths to home
 ];
 

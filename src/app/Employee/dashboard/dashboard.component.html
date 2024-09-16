@@ -70,7 +70,7 @@
       <div class="input-group">
         <div>
           <label for="from">From:</label>
-          <input type="text" #placesRefFrom="ngx-places" ngx-gp-autocomplete [options]="options" (onAddressChange)="AddressChange($event, 'from')" />
+          <input type="text" #placesRefFrom="ngx-places" ngx-gp-autocomplete [options]="options" (onAddressChange)="AddressChange($event, 'from')" name="from" />
           {{formattedaddressFrom}}
           <label for="from-lat">From Latitude:</label>
           <input type="text" id="from-lat" name="fromLat" [value]="fromLatitude" />
@@ -114,7 +114,6 @@
         <input type="text" id="cost-center" [(ngModel)]="schedule.costCenter" name="costCenter">
       </div>
     </div>
-
     <!-- Vehicle and Package Display -->
     <div class="selection-info">
       <div class="vehicle-info" *ngIf="schedule.vehicleType">

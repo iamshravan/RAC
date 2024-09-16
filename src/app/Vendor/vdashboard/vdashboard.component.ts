@@ -11,11 +11,45 @@ import { FormsModule } from '@angular/forms';
 })
 export class VendorComponent {
   employees = [
-    { id: 'SDE1', name: 'Halesh', position: 'Developer' },
-    { id: 'SDE2', name: 'Prashanth', position: 'Designer' }
+    { 
+      id: '1', // Example ID
+      travelDate: '21 JUN', 
+      travelTime: '09:00', 
+      name: 'Halesh', 
+      phone: '8310024842', 
+      tripType: 'Airport', 
+      vehicleType: 'Sedan', 
+      from: 'RGY', 
+      to: 'Prasanna theater', 
+      status: 'Pending' 
+    },
+    { 
+      id: '2', // Example ID
+      travelDate: '16 AUG', 
+      travelTime: '14:30', 
+      name: 'Prashanth', 
+      phone: '7349212889', 
+      tripType: 'Disposal', 
+      vehicleType: 'SUV', 
+      from: 'Sarakki signal', 
+      to: 'Golden square jp nagar', 
+      status: 'Confirmed' 
+    },
+    { 
+      id: '3', // Example ID
+      travelDate: '6 AUG', 
+      travelTime: '14:30', 
+      name: 'John Cena', 
+      phone: '7349212889', 
+      tripType: 'Disposal', 
+      vehicleType: 'SUV', 
+      from: 'Sarakki signal', 
+      to: 'Golden square jp nagar', 
+      status: 'Declined' 
+    }
   ];
 
-  filteredEmployees = [...this.employees]; // Initialize with all employees
+  filteredEmployees = [...this.employees];
   selectedEmployee: any = null;
   booking = {
     pickupLocation: '',
@@ -23,12 +57,13 @@ export class VendorComponent {
     date: '',
     time: ''
   };
+
   searchQuery: string = '';
 
   filterEmployees() {
     this.filteredEmployees = this.employees.filter(employee =>
-      employee.id.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-      employee.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      employee.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      employee.id.includes(this.searchQuery)
     );
   }
 
@@ -42,7 +77,33 @@ export class VendorComponent {
 
   onBookCab() {
     console.log('Booking details:', this.booking);
-    // Add booking logic here
     this.closeBookingForm();
   }
+
+  // Action Methods
+  editEmployee(employee: any) {
+    console.log('Edit employee:', employee);
+  }
+
+  viewInvoice(employee: any) {
+    console.log('View invoice for:', employee);
+  }
+
+  generateInvoice(employee: any) {
+    console.log('Generate invoice for:', employee);
+  }
+
+  assignVehicle(employee: any) {
+    console.log('Assign vehicle to:', employee);
+  }
+
+  trackStatus(employee: any) {
+    console.log('Track status for:', employee);
+  }
 }
+
+
+
+
+
+

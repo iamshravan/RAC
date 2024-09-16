@@ -3,29 +3,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
   background-color: #f4f4f4;
+  min-height: 100vh; /* Ensures full screen height */
+  box-sizing: border-box;
 }
 
 /* Search bar styles */
 .search-bar {
   margin-bottom: 20px;
+  width: 100%; /* Full width for the search bar */
+  max-width: 1000px; /* Same as table for consistency */
 }
 
-.search-bar input {
+/* Table container to center the table */
+.table-container {
+  display: flex;
+  justify-content: center; /* Centers the table horizontally */
   width: 100%;
-  max-width: 600px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  box-sizing: border-box;
+  padding: 20px; /* Add padding around the table container */
 }
 
 /* Style the table */
 table {
   width: 100%;
-  max-width: 600px;
+  max-width: 1000px; /* Increase max-width for a larger table */
   border-collapse: collapse;
   margin-bottom: 20px;
   background-color: #fff;
@@ -34,6 +37,7 @@ table {
   overflow: hidden;
 }
 
+/* Table headers */
 thead th {
   background-color: #0F149A;
   color: white;
@@ -41,29 +45,15 @@ thead th {
   text-align: left;
 }
 
+/* Table data cells */
 tbody td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
 
+/* Remove border from the last row */
 tbody tr:last-child td {
   border-bottom: none;
-}
-
-/* Style the button */
-button {
-  background-color: #0F149A;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #FD9B4D;
 }
 
 /* Modal styles */
@@ -117,4 +107,34 @@ textarea {
 /* Ensure textareas are not too large */
 textarea {
   height: 60px; /* Adjust height as needed */
+}
+
+/* Status specific styles */
+.pending-status {
+  background-color: #135caa; /* Light blue for pending */
+  color: #ffffff; /* Dark blue text */
+}
+
+.confirmed-status {
+  background-color: #09a32d; /* Light green for completed */
+  color: #ffffff; /* Dark green text */
+}
+
+
+.declined-status {
+  background-color: #ff3b25; /* Light green for completed */
+  color: #ffffff; /* Dark green text */
+}
+
+/* Keep icon styles as specified */
+table i {
+  margin: 0 5px; /* Space between icons */
+  font-size: 18px; /* Adjust size of the icons */
+  cursor: pointer; /* Change cursor on hover */
+  color: #0F149A; /* Default color for icons */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+table i:hover {
+  color: #FD9B4D; /* Color on hover */
 }

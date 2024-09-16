@@ -92,7 +92,7 @@ form {
 /* Style the table */
 table {
     width: 100%;
-    max-width: 600px;
+    max-width: 1000px; /* Increased max-width */
     border-collapse: collapse;
     margin-bottom: 20px;
     background-color: #fff;
@@ -115,6 +115,13 @@ tbody td {
 
 tbody tr:last-child td {
     border-bottom: none;
+}
+
+/* Ensure Date column is wider and formatted correctly */
+table th:nth-child(1),
+table td:nth-child(1) {
+    width: 150px; /* Increased width */
+    white-space: nowrap; /* Prevents wrapping */
 }
 
 /* Style form labels */
@@ -189,6 +196,7 @@ button:hover {
     justify-content: center;
     margin-top: 30px; /* Ensure spacing above the button */
 }
+
 
 /* Style vehicle selection modal */
 .vehicle-options {

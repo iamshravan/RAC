@@ -7,6 +7,7 @@ import { NgxGpAutocompleteModule } from '@angular-magic/ngx-gp-autocomplete';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { Loader } from '@googlemaps/js-api-loader';
 import { type } from 'node:os';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,8 +60,10 @@ export class DashboardComponent {
     arrivalTime: '',
     carrierName: '',
     departureTime: '',
-    costCenter: ''
+    costCenter: '',
+    status:''
   };
+  
 
   costCenterCode = '';
   selectedBillType = '';
@@ -70,10 +73,12 @@ export class DashboardComponent {
       this.formattedaddressFrom = place.formatted_address;
       this.fromLatitude = place.geometry.location.lat();
       this.fromLongitude = place.geometry.location.lng();
+      this.schedule.from = place.formatted_address; 
     } else if (type === 'to') {
       this.formattedaddressTo = place.formatted_address;
       this.toLatitude = place.geometry.location.lat();
       this.toLongitude = place.geometry.location.lng();
+      this.schedule.to = place.formatted_address;
     }
     else if (type === 'pickupLocation') {
       this.schedule.location = place.formatted_address;
@@ -139,7 +144,59 @@ export class DashboardComponent {
     this.closePackageModal();
   }
 
+  constructor(private router: Router) {}
+
+  // onSchedule() {
+  //   console.log('Scheduled Trip:', this.schedule);
+  
+  
+  //   // Redirect to the trip dashboard
+  //   this.router.navigate(['/trip-dashboard']);
+  // }
+
+
+
+
+
+
+  // onSchedule() {
+  //   console.log('Scheduled Trip:', this.schedule);
+  
+  //   // Retrieve existing trips from sessionStorage
+  //   let storedTrips = sessionStorage.getItem('scheduledTrips');
+  //   let trips = storedTrips ? JSON.parse(storedTrips) : [];
+  //   console.log('Existing Trips:', trips);
+  
+  //   // Add the new trip to the list
+  //   trips.push(this.schedule);
+  //   console.log('Updated Trips:', trips);
+  
+  //   // Save back to sessionStorage
+  //   sessionStorage.setItem('scheduledTrips', JSON.stringify(trips));
+  
+  //   // Redirect to the trip dashboard
+  //   this.router.navigate(['/trip-dashboard']);
+  // }
   onSchedule() {
+    // Set the status to 'Pending' by default
+    this.schedule.status = 'Pending';
+    
     console.log('Scheduled Trip:', this.schedule);
+    
+    // Retrieve existing trips from sessionStorage
+    let storedTrips = sessionStorage.getItem('scheduledTrips');
+    let trips = storedTrips ? JSON.parse(storedTrips) : [];
+    
+    // Add the new trip to the list
+    trips.push(this.schedule);
+    console.log('Updated Trips:', trips);
+    
+    // Save back to sessionStorage
+    sessionStorage.setItem('scheduledTrips', JSON.stringify(trips));
+    
+    // Redirect to the trip dashboard
+    this.router.navigate(['/trip-dashboard']);
   }
+  
+  
 }
