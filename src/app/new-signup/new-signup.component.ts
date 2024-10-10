@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-signup',
   templateUrl: './new-signup.component.html',
   styleUrls: ['./new-signup.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule]
+  imports: [FormsModule, CommonModule], // Keep FormsModule and CommonModule
 })
 export class NewSignupComponent {
   signupData = {
@@ -24,7 +25,7 @@ export class NewSignupComponent {
   emailDomain: string | null = null;
   emailPlaceholder: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   onTypeChange(type: string) {
     this.signupData.type = type;

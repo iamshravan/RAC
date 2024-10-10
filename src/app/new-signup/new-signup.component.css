@@ -1,4 +1,3 @@
-/* Center-align the container and add padding */
 .signup-container {
     display: flex;
     flex-direction: column;
@@ -67,7 +66,6 @@ select {
 }
 
 /* Style email container */
-/* Email input container */
 .email-input-container {
     display: flex;
     align-items: center;
@@ -80,6 +78,7 @@ select {
     padding-right: 100px; /* Space for domain text */
 }
 
+/* Style email domain text */
 .email-domain {
     font-size: 16px; /* Adjust font size as needed */
     color: #0F149A;
@@ -87,7 +86,6 @@ select {
     right: 10px; /* Position domain text */
     white-space: nowrap; /* Prevent wrapping */
 }
-
 
 /* Style buttons */
 button {
