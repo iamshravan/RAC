@@ -10,7 +10,7 @@ import { TripDashboardComponent } from './trip-dashboard/trip-dashboard.componen
 import { NewSignupComponent } from './new-signup/new-signup.component';
 
 const routes: Routes = [
-  { path: '', component: LandingpageComponent },
+  { path: '', component: NewSignupComponent},
   { path: 'signup', component: NewSignupComponent },
   { path: 'login', component: AuthpageComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },

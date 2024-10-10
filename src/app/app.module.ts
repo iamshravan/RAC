@@ -8,6 +8,7 @@ import { DashboardComponent } from './Employee/dashboard/dashboard.component';
 import { TripDashboardComponent } from './trip-dashboard/trip-dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { NewSignupComponent } from './new-signup/new-signup.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { NewSignupComponent } from './new-signup/new-signup.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     CommonModule,
     NgxGpAutocompleteModule,
     GooglePlaceModule,
