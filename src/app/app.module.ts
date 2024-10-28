@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http'; // Import HttpClient provider
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { NgxGpAutocompleteModule } from '@angular-magic/ngx-gp-autocomplete';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { DashboardComponent } from './Employee/dashboard/dashboard.component';
 import { TripDashboardComponent } from './trip-dashboard/trip-dashboard.component';
 import { FormsModule } from '@angular/forms';
-//import { NewSignupComponent } from './new-signup/new-signup.component';
-import { RouterModule } from '@angular/router'; // Import RouterModule for routing
+import { AppRoutingModule } from './app-routing.module'; // Ensure AppRoutingModule is imported
 
 @NgModule({
   declarations: [
     DashboardComponent,
     TripDashboardComponent,
-    //NewSignupComponent
+    // You can add NewSignupComponent here if it’s not standalone
   ],
   imports: [
     BrowserModule,
@@ -22,12 +21,11 @@ import { RouterModule } from '@angular/router'; // Import RouterModule for routi
     NgxGpAutocompleteModule,
     GooglePlaceModule,
     FormsModule,
-    RouterModule // Add RouterModule for routing support
+    AppRoutingModule, // Use AppRoutingModule for routing
   ],
   providers: [
-    provideHttpClient() // Provide HttpClient
+    provideHttpClient(withFetch()) // Correctly set up HttpClient provider
   ],
-  
-  //bootstrap: [NewSignupComponent] // Set the main component for bootstrapping
+  bootstrap: [DashboardComponent] // Or your main component for bootstrapping
 })
-export class AppModule {}
+export class AppModule { }

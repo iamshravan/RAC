@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { UserService } from './user.service';
+// import { provideHttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-signup',
   templateUrl: './new-signup.component.html',
   styleUrls: ['./new-signup.component.css'],
   standalone: true,
-  imports: [FormsModule, CommonModule], // Keep FormsModule and CommonModule
+  imports: [FormsModule, CommonModule, RouterModule],
 })
-export class NewSignupComponent {
+export class NewSignupComponent implements OnInit {
   signupData = {
     name: '',
     email: '',
@@ -25,14 +27,27 @@ export class NewSignupComponent {
   emailDomain: string | null = null;
   emailPlaceholder: string = '';
 
-  constructor(private router: Router, private http: HttpClient) {}
+  // Domain map for companies
+  private readonly domainMap: { [key: string]: string } = {
+    'RTX': '@rtx.com',
+    'TCS': '@tcs.in',
+    'Diligent': '@diligent.com'
+  };
 
-  onTypeChange(type: string) {
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private userService: UserService // Inject the UserService
+  ) {}
+
+  ngOnInit(): void {
+    // Example: initialize companies or any necessary data here
+  }
+
+  onTypeChange(type: string): void {
     this.signupData.type = type;
     if (type === 'General') {
-      this.emailDomain = null;
-      this.emailPlaceholder = ''; // Empty placeholder for General User
-      this.signupData.email = ''; // Clear email input field
+      this.clearEmailFields();
     } else if (type === 'Corporate') {
       this.emailDomain = this.getEmailDomainForCompany(this.signupData.company);
       this.emailPlaceholder = this.emailDomain ? `user${this.emailDomain}` : '';
@@ -40,7 +55,7 @@ export class NewSignupComponent {
     }
   }
 
-  onCompanyChange(event: Event) {
+  onCompanyChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.signupData.company = selectElement.value;
     this.emailDomain = this.getEmailDomainForCompany(this.signupData.company);
@@ -49,16 +64,22 @@ export class NewSignupComponent {
   }
 
   getEmailDomainForCompany(company: string): string {
-    const domainMap: { [key: string]: string } = {
-      'RTX': '@rtx.com',
-      'TCS': '@tcs.in',
-      'Diligent': '@diligent.com'
-    };
-    return domainMap[company] || '';
+    return this.domainMap[company] || '';
   }
 
-  onSignup() {
-    // Handle signup logic here
-    this.router.navigate(['/login'], { queryParams: { role: 'employee' } });
+  clearEmailFields(): void {
+    this.emailDomain = null;
+    this.emailPlaceholder = '';
+    this.signupData.email = '';
+  }
+
+  onSignup(): void {
+    this.userService.signup(this.signupData).subscribe({
+      next: (response: any) => {
+        console.log('Signup successful:', response);
+        this.router.navigate(['/login'], { queryParams: { role: 'employee' } });
+      },
+      error: (err: any) => console.error('Signup error:', err)
+    });
   }
 }
