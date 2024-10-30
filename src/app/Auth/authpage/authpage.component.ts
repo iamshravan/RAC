@@ -25,7 +25,7 @@ export class AuthpageComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.role = params['role'];
+      this.role = params['role'];     
       console.log('Role from query params:', this.role); // Debugging line
     });
   }
