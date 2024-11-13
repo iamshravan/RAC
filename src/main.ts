@@ -6,9 +6,11 @@ import { AppComponent } from './app/app.component';
 import { AppRoutingModule } from './app/app-routing.module';
 import { importProvidersFrom } from '@angular/core';
 
+import { provideHttpClient } from '@angular/common/http';
 bootstrapApplication(AppComponent, {
   providers: [
     // Add any providers here if needed
-    importProvidersFrom(AppRoutingModule) // Ensure routing is set up
+    importProvidersFrom(AppRoutingModule), // Ensure routing is set up
+    provideHttpClient(), // Ensure HttpClient is set up
   ],
-}).catch(err => console.error(err));
+}).catch((err) => console.error(err));

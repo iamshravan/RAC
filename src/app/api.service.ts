@@ -6,12 +6,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:3000/api'; // NestJS API URL
+  private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
 
-  // Example function to call the backend
-  getHello(): Observable<string> {
-    return this.http.get<string>(this.apiUrl);
+  getData(): Observable<any> {
+    return this.http.get(this.apiUrl);
   }
 }

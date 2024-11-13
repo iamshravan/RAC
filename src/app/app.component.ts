@@ -13,14 +13,18 @@ import { ApiService } from './api.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'rentacab';
-  message: string = '';
+  data: any;
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getHello().subscribe((data) => {
-      this.message = data;
-    });
+    this.apiService.getData().subscribe(
+      (response) => {
+        this.data = response;
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
   }
 }
