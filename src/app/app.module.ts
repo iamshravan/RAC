@@ -8,6 +8,7 @@ import { DashboardComponent } from './Employee/dashboard/dashboard.component';
 import { TripDashboardComponent } from './trip-dashboard/trip-dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module'; // Ensure AppRoutingModule is imported
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,10 +23,11 @@ import { AppRoutingModule } from './app-routing.module'; // Ensure AppRoutingMod
     GooglePlaceModule,
     FormsModule,
     AppRoutingModule, // Use AppRoutingModule for routing
+    HttpClientModule,
   ],
   providers: [
-    provideHttpClient(withFetch()) // Correctly set up HttpClient provider
+    provideHttpClient(withFetch()), // Correctly set up HttpClient provider
   ],
-  bootstrap: [DashboardComponent] // Or your main component for bootstrapping
+  bootstrap: [DashboardComponent], // Or your main component for bootstrapping
 })
-export class AppModule { }
+export class AppModule {}
