@@ -1,3 +1,4 @@
+/* General container for the signup page */
 .signup-container {
     display: flex;
     flex-direction: column;
@@ -32,6 +33,7 @@ label {
 /* Style form inputs */
 input[type="text"],
 input[type="number"],
+input[type="password"],
 select {
     width: 100%;
     padding: 10px;
@@ -109,4 +111,46 @@ button:hover {
     color: red;
     margin-top: 10px;
     text-align: center;
+}
+
+/* Additional styles for new fields */
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for password field */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus,
+input[type="password"]:focus {
+    border-color: #0F149A; /* Change border color on focus */
+    box-shadow: 0 0 5px rgba(15, 20, 154, 0.5); /* Focus shadow effect */
+}
+
+/* Style the new fields with margins */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Optional: Custom style for the user_id and city_id fields */
+#user_id,
+#city_id {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: #000;
+}
+
+/* Adjust space between fields */
+.form-group {
+    margin-bottom: 15px;
 }

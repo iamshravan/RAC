@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
-// import { provideHttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-signup',
@@ -15,17 +14,21 @@ import { UserService } from './user.service';
 })
 export class NewSignupComponent implements OnInit {
   signupData = {
+    user_id: '',
     name: '',
     email: '',
     address: '',
     gender: '',
     number: '',
-    type: '',
-    company: ''
+    password: '',
+    user_type: '',  // Changed from 'type' to 'user_type'
+    company: '',
+    city_id: 0
   };
 
   emailDomain: string | null = null;
   emailPlaceholder: string = '';
+  errorMessage: string = '';  // Added errorMessage property
 
   // Domain map for companies
   private readonly domainMap: { [key: string]: string } = {
@@ -44,11 +47,11 @@ export class NewSignupComponent implements OnInit {
     // Example: initialize companies or any necessary data here
   }
 
-  onTypeChange(type: string): void {
-    this.signupData.type = type;
-    if (type === 'General') {
+  onUserTypeChange(user_type: string): void {
+    this.signupData.user_type = user_type;
+    if (user_type === 'General') {
       this.clearEmailFields();
-    } else if (type === 'Corporate') {
+    } else if (user_type === 'Corporate') {
       this.emailDomain = this.getEmailDomainForCompany(this.signupData.company);
       this.emailPlaceholder = this.emailDomain ? `user${this.emailDomain}` : '';
       this.signupData.email = ''; // Clear email input field
@@ -79,7 +82,10 @@ export class NewSignupComponent implements OnInit {
         console.log('Signup successful:', response);
         this.router.navigate(['/login'], { queryParams: { role: 'employee' } });
       },
-      error: (err: any) => console.error('Signup error:', err)
+      error: (err: any) => {
+        console.error('Signup error:', err);
+        this.errorMessage = 'An error occurred while signing up. Please try again later.';  // Set error message
+      }
     });
   }
 }

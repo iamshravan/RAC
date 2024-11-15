@@ -1,69 +1,132 @@
 <div class="signup-container">
-  <h2>Sign Up</h2>
-  <form (ngSubmit)="onSignup()" #signupForm="ngForm">
-    
+  <form (ngSubmit)="onSignup()">
     <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" [(ngModel)]="signupData.name" name="name" required>
+      <label for="name">name</label>
+      <input type="text" id="name" [(ngModel)]="signupData.name" name="name" required />
     </div>
 
     <div class="form-group">
-      <label for="address">Address:</label>
-      <input type="text" id="address" [(ngModel)]="signupData.address" name="address" required>
+      <label for="email">email</label>
+      <div class="email-input-container">
+        <input
+          type="text"
+          id="email"
+          [(ngModel)]="signupData.email"
+          name="email"
+          [placeholder]="emailPlaceholder"
+          required
+        />
+        <span *ngIf="emailDomain" class="email-domain">{{ emailDomain }}</span>
+      </div>
     </div>
 
     <div class="form-group">
-      <label>Gender:</label>
+      <label for="user_id">user_id</label>
+      <input
+        type="text"
+        id="user_id"
+        [(ngModel)]="signupData.user_id"
+        name="user_id"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="password">password</label>
+      <input
+        type="password"
+        id="password"
+        [(ngModel)]="signupData.password"
+        name="password"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="city_id">city_id</label>
+      <input
+        type="number"
+        id="city_id"
+        [(ngModel)]="signupData.city_id"
+        name="city_id"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label>gender</label>
       <div class="gender-container">
         <div>
-          <input type="radio" id="male" name="gender" [(ngModel)]="signupData.gender" value="Male" required>
+          <input
+            type="radio"
+            id="male"
+            name="gender"
+            value="Male"
+            [(ngModel)]="signupData.gender"
+            required
+          />
           <label for="male">Male</label>
         </div>
         <div>
-          <input type="radio" id="female" name="gender" [(ngModel)]="signupData.gender" value="Female" required>
+          <input
+            type="radio"
+            id="female"
+            name="gender"
+            value="Female"
+            [(ngModel)]="signupData.gender"
+            required
+          />
           <label for="female">Female</label>
         </div>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="number">Number:</label>
-      <input type="text" id="number" [(ngModel)]="signupData.number" name="number" required>
-    </div>
-    
-    <div class="form-group">
-      <label>Type:</label>
+      <label for="user_type">user_type</label>
       <div class="type-container">
         <div>
-          <input type="radio" id="general" name="type" [(ngModel)]="signupData.type" value="General" (change)="onTypeChange('General')" required>
-          <label for="general">General User</label>
+          <input
+            type="radio"
+            id="general"
+            name="user_type"
+            value="General"
+            [(ngModel)]="signupData.user_type"
+            (change)="onUserTypeChange('General')"
+            required
+          />
+          <label for="general">General</label>
         </div>
         <div>
-          <input type="radio" id="corporate" name="type" [(ngModel)]="signupData.type" value="Corporate" (change)="onTypeChange('Corporate')" required>
-          <label for="corporate">Corporate User</label>
+          <input
+            type="radio"
+            id="corporate"
+            name="user_type"
+            value="Corporate"
+            [(ngModel)]="signupData.user_type"
+            (change)="onUserTypeChange('Corporate')"
+            required
+          />
+          <label for="corporate">Corporate</label>
         </div>
       </div>
     </div>
-    
-    <div *ngIf="signupData.type === 'Corporate'" class="form-group">
-      <label for="company">Company:</label>
-      <select id="company" [(ngModel)]="signupData.company" name="company" (change)="onCompanyChange($event)">
+
+    <div *ngIf="signupData.user_type === 'Corporate'" class="form-group">
+      <label for="company">company</label>
+      <select
+        id="company"
+        [(ngModel)]="signupData.company"
+        name="company"
+        (change)="onCompanyChange($event)"
+        required
+      >
         <option value="RTX">RTX</option>
         <option value="TCS">TCS</option>
         <option value="Diligent">Diligent</option>
       </select>
     </div>
 
-    <div *ngIf="signupData.type === 'General' || (signupData.type === 'Corporate' && signupData.company)" class="form-group email-container">
-      <label for="email">Email:</label>
-      <div class="email-input-container">
-        <input type="text" id="email" [(ngModel)]="signupData.email" name="email" [placeholder]="emailPlaceholder">
-        <span *ngIf="emailDomain && signupData.type === 'Corporate'" class="email-domain">{{ emailDomain }}</span>
-      </div>
-    </div>
-
-    <div class="button-container">
-      <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
-    </div>
+    <button type="submit">sign up</button>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>
 </div>
