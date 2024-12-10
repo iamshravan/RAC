@@ -1,0 +1,55 @@
+<div class="vendor-container">
+    <div class="search-bar">
+      <input 
+        type="text" 
+        placeholder="Search by name or ID" 
+        [(ngModel)]="searchQuery" 
+        (input)="filterEmployees()"
+      />
+    </div>
+  
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Traveller Name</th>
+            <th>Phone</th>
+            <th>Trip Type</th>
+            <th>Vehicle Type</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of filteredEmployees">
+            <td>{{ employee.travelDate }}</td>
+            <td>{{ employee.travelTime }}</td>
+            <td>{{ employee.name }}</td>
+            <td>{{ employee.phone }}</td>
+            <td>{{ employee.tripType }}</td>
+            
+            <!-- Vehicle Type Field (No Edit) -->
+            <td>{{ employee.vehicleType }}</td>
+  
+            <!-- From Location Field (No Edit) -->
+            <td>{{ employee.from }}</td>
+  
+            <!-- To Location Field (No Edit) -->
+            <td>{{ employee.to }}</td>
+  
+            <td>
+              <select [(ngModel)]="employee.status" (change)="handleStatusChange(employee)">
+                <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Declined">Declined</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

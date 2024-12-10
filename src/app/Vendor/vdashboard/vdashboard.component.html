@@ -1,13 +1,15 @@
 <div class="vendor-container">
+  <!-- Search Bar -->
   <div class="search-bar">
-    <input 
-      type="text" 
-      placeholder="Search by name or ID" 
-      [(ngModel)]="searchQuery" 
+    <input
+      type="text"
+      placeholder="Search by name or ID"
+      [(ngModel)]="searchQuery"
       (input)="filterEmployees()"
     />
   </div>
 
+  <!-- Employee Table -->
   <div class="table-container">
     <table>
       <thead>
@@ -21,6 +23,8 @@
           <th>From</th>
           <th>To</th>
           <th>Status</th>
+          <th>Vehicle Number</th>
+          <th>Driver Name</th>
           <th>Action</th>
         </tr>
       </thead>
@@ -31,21 +35,86 @@
           <td>{{ employee.name }}</td>
           <td>{{ employee.phone }}</td>
           <td>{{ employee.tripType }}</td>
-          <td>{{ employee.vehicleType }}</td>
-          <td>{{ employee.from }}</td>
-          <td>{{ employee.to }}</td>
-          <td [ngClass]="{'pending-status': employee.status === 'Pending', 'confirmed-status': employee.status === 'Confirmed', 'declined-status': employee.status === 'Declined'}">
-            {{ employee.status }}
+          <td>
+            <input
+              type="text"
+              [(ngModel)]="employee.vehicleType"
+              [readonly]="!employee.isEditMode"
+            />
           </td>
+          <td>
+            <input
+              type="text"
+              [(ngModel)]="employee.from"
+              [readonly]="!employee.isEditMode"
+            />
+          </td>
+          <td>
+            <input
+              type="text"
+              [(ngModel)]="employee.to"
+              [readonly]="!employee.isEditMode"
+            />
+          </td>
+          <td>
+            <select [(ngModel)]="employee.status" (change)="handleStatusChange(employee)">
+              <option value="Pending">Pending</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Declined">Declined</option>
+            </select>
+          </td>
+          <td>{{ employee.vehicleNumber || 'N/A' }}</td>
+          <td>{{ employee.driverName || 'N/A' }}</td>
           <td class="action-buttons">
-            <i class="fas fa-edit" (click)="editEmployee(employee)" title="Edit"></i>
-            <i class="fas fa-file-invoice" (click)="viewInvoice(employee)" title="View Invoice"></i>
-            <i class="fas fa-file-invoice-dollar" (click)="generateInvoice(employee)" title="Generate Invoice"></i>
-            <i class="fas fa-car" (click)="assignVehicle(employee)" title="Assign Vehicle"></i>
-            <i class="fas fa-address-card" (click)="trackStatus(employee)" title="Track Status"></i>
+            <i *ngIf="!employee.isEditMode" class="fas fa-edit" (click)="editEmployee(employee)" title="Edit"></i>
+            <i *ngIf="employee.isEditMode" class="fas fa-save" (click)="saveEmployee(employee)" title="Save"></i>
+            <i *ngIf="employee.isEditMode" class="fas fa-times" (click)="cancelEdit(employee)" title="Cancel"></i>
+            <i class="fas fa-car" title="Assign Vehicle" (click)="openAssignVehicleModal(employee)"></i>
           </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Modal for Assign Vehicle -->
+  <div class="modal" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Assign Vehicle</h2>
+      
+      <!-- Vehicle Number Autocomplete -->
+      <label for="vehicleNumber">Vehicle Number</label>
+      <input
+        id="vehicleNumber"
+        type="text"
+        [(ngModel)]="vehicleNumber"
+        (input)="onVehicleInput($event)"
+        (blur)="onVehicleBlur()"
+        placeholder="Enter vehicle number"
+      />
+      <ul *ngIf="showVehicleSuggestions && filteredVehicleNumbers.length > 0" class="autocomplete-list">
+        <li *ngFor="let vehicleNumber of filteredVehicleNumbers" (click)="selectVehicle(vehicleNumber)">
+          {{ vehicleNumber }}
+        </li>
+      </ul>
+
+      <!-- Driver Name Autocomplete -->
+      <label for="driverName">Driver Name</label>
+      <input
+        id="driverName"
+        type="text"
+        [(ngModel)]="driverName"
+        (input)="onDriverInput($event)"
+        (blur)="onDriverBlur()"
+        placeholder="Enter driver name"
+      />
+      <ul *ngIf="showDriverSuggestions && filteredDrivers.length > 0" class="autocomplete-list">
+        <li *ngFor="let driver of filteredDrivers" (click)="selectDriver(driver)">
+          {{ driver }}
+        </li>
+      </ul>
+    
+      <button (click)="assignVehicle()">Deploy</button>
+    </div>
   </div>
 </div>

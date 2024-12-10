@@ -1,0 +1,109 @@
+/* Container for the vendor page */
+.vendor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  /* Search bar styles */
+  .search-bar {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1000px;
+  }
+  
+  /* Table container to center the table */
+  .table-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Style the table */
+  table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  /* Table headers */
+  thead th {
+    background-color: #0F149A;
+    color: white;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  /* Table data cells */
+  tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Remove border from the last row */
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  /* Dropdown menu for status */
+  .status-dropdown {
+    width: 100%;
+    max-width: 150px; /* Adjust dropdown width */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  
+  /* Customize dropdown hover and focus */
+  .status-dropdown:hover {
+    border-color: #0F149A;
+  }
+  
+  .status-dropdown:focus {
+    outline: none;
+    border-color: #FD9B4D;
+  }
+  
+  /* Different status background colors */
+  .pending-status {
+    background-color: #135caa;
+    color: #ffffff;
+  }
+  
+  .confirmed-status {
+    background-color: #09a32d;
+    color: #ffffff;
+  }
+  
+  .declined-status {
+    background-color: #ff3b25;
+    color: #ffffff;
+  }
+  
+  /* Icon styles for table actions */
+  table i {
+    margin: 0 5px;
+    font-size: 18px;
+    cursor: pointer;
+    color: #0F149A;
+    transition: color 0.3s ease;
+  }
+  
+  table i:hover {
+    color: #FD9B4D;
+  }
+  

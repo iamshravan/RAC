@@ -1,0 +1,39 @@
+/* Global body styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* Global heading styles */
+h1, h2, h3, h4, h5, h6 {
+  color: #0F149A; /* Primary color for headings */
+  margin: 0 0 10px;
+  font-weight: bold;
+}
+
+/* Global button styles */
+button {
+  background-color: #0F149A; /* Primary button color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for buttons */
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #FD9B4D; /* Hover effect color */
+}
+
+/* Accessible button styles */
+button:disabled {
+  background-color: #cccccc; /* Disabled button background */
+  cursor: not-allowed;
+}

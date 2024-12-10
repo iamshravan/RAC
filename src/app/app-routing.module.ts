@@ -4,18 +4,20 @@ import { LandingpageComponent } from './Landing/landingpage/landingpage.componen
 import { AuthpageComponent } from './Auth/authpage/authpage.component';
 import { ForgotPasswordComponent } from './Auth/forgot-password/forgot-password.component';
 import { DashboardComponent } from './Employee/dashboard/dashboard.component';
-//import { VdashboardComponent } from './Vendor/vdashboard/vdashboard.component';
 import { VendorComponent } from './Vendor/vdashboard/vdashboard.component';
 import { TripDashboardComponent } from './trip-dashboard/trip-dashboard.component';
 import { NewSignupComponent } from './new-signup/new-signup.component';
+import { CdashboardComponent } from '../cdashboard/cdashboard.component';
 
 const routes: Routes = [
-  { path: '', component: NewSignupComponent},
+  { path: '', component: LandingpageComponent },
+  { path: 'landing', component: LandingpageComponent },
   { path: 'signup', component: NewSignupComponent },
   { path: 'login', component: AuthpageComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'vdashboard', component: VendorComponent},
+  { path: 'vdashboard', component: VendorComponent },
+  { path: 'cdashboard', component: CdashboardComponent },  // Add route for Cdashboard
   { path: 'trip-dashboard', component: TripDashboardComponent },
   { path: '**', redirectTo: '' } // Redirect unknown paths to home
 ];
